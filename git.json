@@ -1,0 +1,61 @@
+{
+    "run": [
+      {
+        "method": "shell.run",
+        "params": {
+          "message": "if ! command -v pnpm &>/dev/null; then npm install -g pnpm; fi",
+          "shell": true
+        }
+      },
+      {
+        "method": "shell.run",
+        "params": {
+          "message": "if [ ! -d 'bolt.new-any-llm' ]; then git clone https://github.com/coleam00/bolt.new-any-llm.git; fi",
+          "shell": true
+        }
+      },
+      {
+        "method": "shell.run",
+        "params": {
+          "message": "cd bolt.new-any-llm && pnpm install",
+          "shell": true
+        }
+      },
+      {
+        "method": "fs.rename",
+        "params": {
+          "oldPath": "bolt.new-any-llm/.env.example",
+          "newPath": "bolt.new-any-llm/.env.local"
+        }
+      },
+      {
+        "method": "input.text",
+        "params": {
+          "label": "Enter your GROQ_API_KEY",
+          "key": "groq_key"
+        }
+      },
+      {
+        "method": "input.text",
+        "params": {
+          "label": "Enter your OPENAI_API_KEY",
+          "key": "openai_key"
+        }
+      },
+      {
+        "method": "input.text",
+        "params": {
+          "label": "Enter your ANTHROPIC_API_KEY",
+          "key": "anthropic_key"
+        }
+      },
+      {
+        "method": "fs.write",
+        "params": {
+          "file": "bolt.new-any-llm/.env.local",
+          "data": "GROQ_API_KEY={{groq_key}}\nOPENAI_API_KEY={{openai_key}}\nANTHROPIC_API_KEY={{anthropic_key}}"
+        }
+      }
+    ]
+  }
+  
